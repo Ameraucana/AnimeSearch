@@ -9,7 +9,7 @@ namespace AnimeSearch.ViewModels
     {
         public MainWindowViewModel()
         {
-            Content = new LoadingScreenViewModel();
+            Content = new LoadingScreenViewModel(this);
         }
         private ViewModelBase content;
         public ViewModelBase Content

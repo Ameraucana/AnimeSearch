@@ -9,5 +9,22 @@
     <Application.Styles>
         <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
         <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
+      <Style Selector="Grid">
+        <Setter Property="Background" Value="#121212"/>
+      </Style>
+      <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="#C8C8C8"/>
+      </Style>
+      <Style Selector="TextBox">
+        <Setter Property="Background" Value="#121212"/>
+        <Setter Property="Foreground" Value="#C4C4C4"/>
+      </Style>
+      <Style Selector="Button">
+        <Setter Property="Background" Value="#232323"/>
+        <Setter Property="BorderThickness" Value="0"/>
+      </Style>
+      <Style Selector=":is(Panel).elevatedA">
+        <Setter Property="Background" Value="#1E1E1E"/>
+      </Style>
     </Application.Styles>
 </Application>
