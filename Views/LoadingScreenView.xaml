@@ -1,0 +1,27 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AnimeSearch.Views.LoadingScreenView">
+  <UserControl.Styles>
+    <Style Selector="TextBlock.Rotating">
+      <Style.Animations>
+        <Animation Easing="SineEaseInOut" PlaybackDirection="Alternate" Duration="0:0:1" IterationCount="Infinite">
+          <KeyFrame Cue="0%">
+            <Setter Property="RotateTransform.Angle" Value="-30"/>
+          </KeyFrame>
+          <KeyFrame Cue="100%">
+            <Setter Property="RotateTransform.Angle" Value="30"/>
+          </KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+  </UserControl.Styles>
+
+  <Grid ColumnDefinitions="*" RowDefinitions="*">
+    <TextBlock Text="Loading..." Classes="Rotating" FontSize="50" FontFamily="Roboto" Foreground="LightGray"
+               FontWeight="Bold"
+               Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+  </Grid>
+</UserControl>
