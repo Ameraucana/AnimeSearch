@@ -17,6 +17,7 @@
 
 
 
+
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.9.10" />
     <PackageReference Include="Avalonia.Desktop" Version="0.9.10" />
@@ -28,19 +29,30 @@
 
 
 
+  <ItemGroup>
+    <Page Include="Views\ListScreenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+
+
+
 
   <ItemGroup>
     <None Update="Assets\Files\data.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Files\token.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Images\Untitled.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Views\ListScreenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
 
   </ItemGroup>
-<!--working zone above-->
 
 </Project>

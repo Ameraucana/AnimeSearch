@@ -113,8 +113,9 @@ namespace AnimeSearch.ViewModels
                 }
                 catch
                 {
-                    //TODO switch to ListScreen
+                    // mediaList is a list of MediaItems to be written to data.db
                     List<MediaItem> mediaList = new List<MediaItem>();
+                    // the ["mediaList"] in root is the list holding all the shows
                     var root = responseObject["data"]["Page"]["mediaList"];
                     foreach (JObject entry in root)
                     {
@@ -133,11 +134,11 @@ namespace AnimeSearch.ViewModels
                             Status = entry["media"]["status"].ToString(),
                             Rating = entry["score"].ToObject<int>()
                         };
-                        Debug.WriteLine("zzz");
 
                         mediaList.Add(newMedia);
                     }
                     await Task.Run(() => Database.WriteMediaList(mediaList));
+                    context.Content = new ListScreenViewModel();
                 }
             }
             //if you're disconnected from the internet
