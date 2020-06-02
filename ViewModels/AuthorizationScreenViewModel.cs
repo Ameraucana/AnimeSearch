@@ -12,6 +12,12 @@ namespace AnimeSearch.ViewModels
         public AuthorizationScreenViewModel(MainWindowViewModel context)
         {
             this.context = context;
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "https://anilist.co/api/v2/oauth/authorize?client_id=3328&response_type=token",
+                UseShellExecute = true
+            };
+            Process.Start(startInfo);
         }
         private string key;
         public string Key
