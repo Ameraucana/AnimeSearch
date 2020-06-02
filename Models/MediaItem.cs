@@ -1,14 +1,14 @@
 ﻿namespace AnimeSearch.Models
 {
-    class MediaItem
+    public class MediaItem
     {
-        public MediaItem() { }
+
 
         public string Name { get; set; }
 
         public int Progress { get; set; }
 
-        public int Episodes { get; set; }
+        public int? Episodes { get; set; }
 
         public string ReleaseType { get; set; }
 
