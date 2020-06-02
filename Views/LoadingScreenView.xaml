@@ -2,12 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" 
              x:Class="AnimeSearch.Views.LoadingScreenView">
   <UserControl.Styles>
     <Style Selector="TextBlock.Rotating">
       <Style.Animations>
-        <Animation Easing="SineEaseInOut" PlaybackDirection="Alternate" Duration="0:0:1" IterationCount="Infinite">
+        <Animation Easing="SineEaseInOut" PlaybackDirection="Alternate" Duration="0:0:1" 
+                   IterationCount="10" FillMode="Forward">
           <KeyFrame Cue="0%">
             <Setter Property="RotateTransform.Angle" Value="-30"/>
           </KeyFrame>
@@ -19,9 +20,12 @@
     </Style>
   </UserControl.Styles>
 
-  <Grid ColumnDefinitions="*" RowDefinitions="*">
-    <TextBlock Text="Loading..." Classes="Rotating" FontSize="50" FontFamily="Roboto" Foreground="LightGray"
-               FontWeight="Bold"
+  <Grid ColumnDefinitions="*" RowDefinitions="5*, *">
+    <TextBlock Text="Loading..." Classes="Rotating" Foreground="LightGray"
+               FontWeight="Bold" FontSize="50" FontFamily="Roboto"
                Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    <ScrollViewer Grid.Column="0" Grid.Row="1" IsVisible="{Binding ErrorIsVisible}">
+      <TextBlock Text="{Binding Error}" Foreground="DarkSalmon"/>
+    </ScrollViewer>
   </Grid>
 </UserControl>

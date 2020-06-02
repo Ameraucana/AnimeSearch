@@ -1,23 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AnimeSearch.Models
+﻿namespace AnimeSearch.Models
 {
     class MediaItem
     {
-        MediaItem(string name, int progress, int episodes,
-                  string releaseType, string startDate, 
-                  string status, int rating)
-        {
-            Name = name;
-            Progress = progress;
-            Episodes = episodes;
-            ReleaseType = releaseType;
-            StartDate = startDate;
-            Status = status;
-            Rating = rating;
-        }
+        public MediaItem() { }
 
         public string Name { get; set; }
 

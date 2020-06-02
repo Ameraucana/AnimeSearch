@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Net;
 using System.Net.Http;
 using AnimeSearch.Models;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using ReactiveUI;
 
 namespace AnimeSearch.ViewModels
 {
@@ -15,6 +17,22 @@ namespace AnimeSearch.ViewModels
     {
         private static readonly HttpClient client = new HttpClient();
         private MainWindowViewModel context;
+        private bool errorIsVisible;
+        public bool ErrorIsVisible
+        {
+            get => errorIsVisible;
+            set => this.RaiseAndSetIfChanged(ref errorIsVisible, value);
+        }
+        private string error = "Error(s): ";
+        public string Error
+        {
+            get => error;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref error, value);
+                ErrorIsVisible = true;
+            }
+        }
 
         public LoadingScreenViewModel(MainWindowViewModel context)
         {
@@ -70,21 +88,39 @@ namespace AnimeSearch.ViewModels
             var responseString = await response.Content.ReadAsStringAsync();
 
             var responseObject = JObject.Parse(responseString);
-            try
+
+            //if you're connected to the internet (i think)
+            if (response.StatusCode != HttpStatusCode.RequestTimeout)
             {
-                if (responseObject["errors"][0]["message"].ToString() == "Invalid token")
+                Debug.WriteLine(response.StatusCode);
+                try
                 {
-                    context.Content = new AuthorizationScreenViewModel(context);
-                    Debug.WriteLine("invalid token");
+                    //where auth token is invalid
+                    if (responseObject["errors"][0]["message"].ToString() == "Invalid token")
+                    {
+                        context.Content = new AuthorizationScreenViewModel(context);
+                        Debug.WriteLine(responseObject["errors"][0].GetType());
+                    }
+                    //where something else went wrong
+                    else
+                    {
+                        foreach (JObject error in responseObject["errors"])
+                        {
+                            Error += $"{error["message"].ToString()}\n";
+                        }
+                    }
+                }
+                catch
+                {
+                    //TODO switch to ListScreen
+                    var root = responseObject["data"]["Page"]["mediaList"];
+
                 }
             }
-            catch
-            {
-                //TODO write to database
-                //TODO switch to ListScreen
-                Debug.WriteLine("end of path");
-                
-            }
+            //if you're disconnected from the internet
+            else
+                Error += $"error 408 (check your connection)";
+            
             Debug.WriteLine(responseString);
         }
     }
