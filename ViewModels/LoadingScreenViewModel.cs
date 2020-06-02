@@ -53,6 +53,7 @@ namespace AnimeSearch.ViewModels
                       month
                       day
                     }
+                    status
                     format
                     nextAiringEpisode {
                       episode
@@ -113,8 +114,30 @@ namespace AnimeSearch.ViewModels
                 catch
                 {
                     //TODO switch to ListScreen
+                    List<MediaItem> mediaList = new List<MediaItem>();
                     var root = responseObject["data"]["Page"]["mediaList"];
+                    foreach (JObject entry in root)
+                    {
+                        int year = entry["media"]["startDate"]["year"].ToObject<int>();
+                        int month = entry["media"]["startDate"]["month"].ToObject<int>();
+                        int day = entry["media"]["startDate"]["day"].ToObject<int>();
+                        DateTime date = new DateTime(year, month, day);
 
+                        MediaItem newMedia = new MediaItem()
+                        {
+                            Name = entry["media"]["title"]["romaji"].ToString(),
+                            Progress = entry["progress"].ToObject<int>(),
+                            Episodes = entry["media"]["episodes"].ToObject<int?>(),
+                            ReleaseType = entry["media"]["format"].ToString(),
+                            StartDate = date.ToString(),
+                            Status = entry["media"]["status"].ToString(),
+                            Rating = entry["score"].ToObject<int>()
+                        };
+                        Debug.WriteLine("zzz");
+
+                        mediaList.Add(newMedia);
+                    }
+                    await Task.Run(() => Database.WriteMediaList(mediaList));
                 }
             }
             //if you're disconnected from the internet
